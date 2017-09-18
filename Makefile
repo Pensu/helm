@@ -2,7 +2,7 @@ DOCKER_REGISTRY   ?= gcr.io
 IMAGE_PREFIX      ?= kubernetes-helm
 SHORT_NAME        ?= tiller
 SHORT_NAME_RUDDER ?= rudder
-TARGETS           = darwin/amd64 linux/amd64 linux/386 linux/arm linux/arm64 linux/ppc64le windows/amd64
+TARGETS           = linux/ppc64le
 DIST_DIRS         = find * -type d -exec
 APP               = helm
 
@@ -60,7 +60,7 @@ check-docker:
 docker-binary: BINDIR = ./rootfs
 docker-binary: GOFLAGS += -a -installsuffix cgo
 docker-binary:
-	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 $(GO) build -o $(BINDIR)/tiller $(GOFLAGS) -tags '$(TAGS)' -ldflags '$(LDFLAGS)' k8s.io/helm/cmd/tiller
+	GOOS=linux GOARCH=ppc64le CGO_ENABLED=0 $(GO) build -o $(BINDIR)/tiller $(GOFLAGS) -tags '$(TAGS)' -ldflags '$(LDFLAGS)' k8s.io/helm/cmd/tiller
 
 .PHONY: docker-build
 docker-build: check-docker docker-binary
@@ -71,7 +71,7 @@ docker-build: check-docker docker-binary
 docker-binary-rudder: BINDIR = ./rootfs
 docker-binary-rudder: GOFLAGS += -a -installsuffix cgo
 docker-binary-rudder:
-	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 $(GO) build -o $(BINDIR)/rudder $(GOFLAGS) -tags '$(TAGS)' -ldflags '$(LDFLAGS)' k8s.io/helm/cmd/rudder
+	GOOS=linux GOARCH=ppc64le CGO_ENABLED=0 $(GO) build -o $(BINDIR)/rudder $(GOFLAGS) -tags '$(TAGS)' -ldflags '$(LDFLAGS)' k8s.io/helm/cmd/rudder
 
 .PHONY: docker-build-experimental
 docker-build-experimental: check-docker docker-binary docker-binary-rudder

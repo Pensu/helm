@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM alpine:3.3
+FROM ppc64le/alpine:3.6
 
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
